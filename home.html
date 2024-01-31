@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta property="og:title" content="LekiFX®">
+    <meta property="og:description" content="LekiFX® Innovative Forex Solutions">
+    <meta property="og:image" content="logo.jpg">
+    <meta property="og:url" content="http://lekech.com/">
+    <meta property="og:type" content="website">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link
+            href="https://unpkg.com/gridjs/dist/theme/mermaid.min.css"
+            rel="stylesheet"
+    />
+    <title>LekiFX Dashboard</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap');
+        #externalWebsite {
+            width: 100%;
+            height: 600px; /* Adjust the height as needed */
+            border: none;
+            margin-top: 20px; /* Adjust the margin as needed */
+        }
+        body {
+            font-family: 'Lato', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        header {
+            background-color: #1a1a1a;
+            color: #ffffff;
+            padding: 10px;
+            width: 100%;
+            text-align: center;
+        }
+
+        #dashboard {
+            width: 80%;
+            max-width: 1200px;
+            margin: 20px 0;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        .dashboard-item {
+            flex: 1 1 calc(30% - 20px);
+            margin: 10px;
+            padding: 15px;
+            background-color: #f0f0f0;
+            border-radius: 8px;
+            box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+        }
+
+        footer {
+            background-color: #1a1a1a;
+            color: #ffffff;
+            padding: 10px;
+            width: 100%;
+            text-align: center;
+            margin-top: auto;
+        }
+        .heading {
+            font-size: 24px; /* Or any size that fits your design */
+            display: flex;
+            align-items: center; /* This will vertically center the ripple with the text */
+        }
+
+        .ripple {
+            display: inline-block;
+            position: relative;
+            width: 20px; /* Adjust size as needed */
+            height: 20px;
+            margin-left: 10px; /* Adjust spacing as needed */
+            border-radius: 50%;
+        }
+
+        .ripple::before, .ripple::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            display: block;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            animation: pulse 2s infinite;
+        }
+
+        .ripple::after {
+            animation-delay: 1s;
+        }
+
+        @keyframes pulse {
+            0% {
+                width: 100%;
+                height: 100%;
+                border: 5px solid green;
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1);
+            }
+            100% {
+                width: 200%;
+                height: 200%;
+                border: 0 solid green;
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(1.2);
+            }
+        }
+    </style>
+</head>
+<body>
+<header>
+    <h1>LekiFX® Dashboard</h1>
+</header>
+<h1>Overview</h1>
+<div id="dashboard">
+    <div class="dashboard-item">
+            <h2>Equity</h2>
+        <p>${{.Account.Equity}}<span id="balance"></span></p>
+    </div>
+    <div class="dashboard-item">
+        <h2>Account Name</h2>
+        <p>{{.Account.Name}}<span id="accountName"></span></p>
+    </div>
+    <div class="dashboard-item">
+        <h2>Broker</h2>
+        <p>{{.Account.Broker}}<span id="broker"></span></p>
+    </div>
+    <div class="dashboard-item">
+        <h2>Margin</h2>
+        <p>${{.Account.Margin}}<span id="margin"></span></p>
+    </div>
+    <div class="dashboard-item">
+        <h2>Free Margin</h2>
+        <p>${{.Account.FreeMargin}}<span id="freeMargin"></span></p>
+    </div>
+    <div class="dashboard-item">
+        <h2>Enabled Status</h2>
+        <p>{{.Account.TradeAllowed}}<span id="enabledStatus"></span></p>
+    </div>
+
+</div>
+<h1>Active Positions</h1>
+<div id="dashboard">
+    <div class="dashboard-item">
+        <div id="wrapper"></div>
+
+        <script src="https://unpkg.com/gridjs/dist/gridjs.umd.js"></script>
+        <script>
+            new gridjs.Grid({
+                columns: ["Symbol","Position Type", "ID", "Profit"],
+                search: false,
+                data: [
+                    {{range $v := .Positions}}
+                    ["{{$v.Symbol}}","{{if $v.Buy}}Buy{{else}}Sell{{end}}", "{{$v.Id}}", "{{$v.Profit}}"],
+                    {{end}}
+                ]
+            }).render(document.getElementById("wrapper"));
+
+        </script>
+
+    </div>
+</div>
+<div id="dashboard">
+
+<h1>Access Server     <div class="ripple"></div></h1>
+<h3>Server IP: ... (As of 1/14/2024)</h3>
+    <iframe id="externalWebsite" src="https://ssheasy.com" frameborder="0"></iframe>
+
+</div>
+
+<!-- iframe for the external website -->
+<footer>
+    <p>&copy; 2024 LekiFX®</p>
+</footer>
+</body>
+</html>
