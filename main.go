@@ -83,13 +83,13 @@ func main() {
 	router := gin.New()
 	gin.SetMode(gin.ReleaseMode)
 	router.Use(gin.Logger())
+	router.LoadHTMLFiles("home.html")
 	// router.POST("/contact", Email())
 	router.POST("/execute", Execute())
 	router.GET("/dash", Dashboard())
-	router.StaticFile("/dash/logo.jpg", "./logo.jpg")
 	//Handle 404
 	router.NoRoute(func(c *gin.Context) {
-		c.Redirect(http.StatusMovedPermanently, "/home")
+		c.Redirect(http.StatusMovedPermanently, "/dash")
 	})
 	fmt.Println(`
 ██╗     ███████╗██╗  ██╗██╗███████╗██╗  ██╗
