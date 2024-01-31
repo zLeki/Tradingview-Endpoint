@@ -83,8 +83,6 @@ func main() {
 	router := gin.New()
 	gin.SetMode(gin.ReleaseMode)
 	router.Use(gin.Logger())
-	router.LoadHTMLFiles("home.html")
-	router.Static("/home", "./digigram")
 	// router.POST("/contact", Email())
 	router.POST("/execute", Execute())
 	router.GET("/dash", Dashboard())
@@ -123,8 +121,8 @@ const (
 	SHORT     = 2    // DO NOT CHANGE
 	EXIT      = iota // DO NOT CHNAGE
 	REGION    = "https://mt-client-api-v1.london.agiliumtrade.ai"
-	ACCOUNT   = ""
-	AUTH      = ""
+	ACCOUNT   = "" // CHANGE
+	AUTH      = "" // CHANGE
 	REVERSE   = false
 )
 
